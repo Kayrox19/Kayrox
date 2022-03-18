@@ -10,7 +10,9 @@ module.exports.run = async (client, message, args) => {
         }
         else {
             return message.channel.bulkDelete(args[0]).then(() => {
-                message.reply(clearMessage(message.member, args[0]))
+                message.reply(clearMessage(message.member, args[0])).then(msg => {
+                    msg.delete({ timeout: 10000});
+                })
             })
         }
 
