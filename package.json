@@ -1,0 +1,20 @@
+{
+  "name": "kayroxbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "watch": "nodemon main.js"
+  },
+  "author": "FrostBreker, Kayrox",
+  "license": "ISC",
+  "dependencies": {
+    "discord-buttons": "^4.0.0-deprecated",
+    "discord-reply": "^0.1.2",
+    "discord.js": "^12.5.3",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.7",
+    "nodemon": "^2.0.15"
+  }
+}
