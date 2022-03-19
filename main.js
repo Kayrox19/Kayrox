@@ -19,7 +19,9 @@ const config = require("./config");
 const { readdirSync } = require("fs");
 const Tickets = require('./Embeds/Tickets');
 const TicketButtons = require("./Buttons/TicketButtons");
+const MiscButtons = require("./Buttons/MiscButtons");
 const NewUsers = require('./Embeds/NewUsers');
+const Misc = require('./Embeds/Misc');
 const TOKEN = process.env.TOKEN;
 const PREFIX = process.env.PREFIX;
 
@@ -97,6 +99,7 @@ client.on('clickButton', async (button) => {
     if (data.label === "Annuler ma commande.") {
         return channel.send(Tickets.confirmDelete(message), { buttons: [TicketButtons.confirmDeleteOrderYes(message.author.id), TicketButtons.confirmDeleteOrderNo(message.author.id)] })
     }
+
     const id = button.id.split("-");
     if (id.includes("close" && "confirm" && "yes")) {
         const allMessages = [];
@@ -126,8 +129,9 @@ client.on('clickButton', async (button) => {
     }
 
     if (id.includes("open" && "order")) {
-        const user = button.clicker.user;
-        const name = user.username + "-commande".toLowerCase();
+        const user = message.guild.member(button.clicker.user);
+        let nameRef = user.user.username.split(" ")[0]
+        const name = nameRef + "-commande".toLowerCase();
 
         const findChannel = button.guild.channels.cache.find(c => c.name === name.toLowerCase()); //Check if channel exist
         if (findChannel) return user.send(Tickets.ticketOpenToUser(findChannel)) // Channel exist
@@ -138,6 +142,21 @@ client.on('clickButton', async (button) => {
 
         const tickets = await client.createTicket(button.guild, data);
         if (tickets) {
+            async function createCat() {
+                const findChannel = button.guild.channels.cache.find(c => c.type === "category" && c.name === config.categories.ticketName); //Check if categories exist
+                if (findChannel) return findChannel;
+                else {
+                    const cat = await message.guild.channels.create(config.categories.ticketName, {
+                        type: 'category', permissionOverwrites: [
+                            {
+                                id: message.guild.id,
+                                allow: ['VIEW_CHANNEL'],
+                            }
+                        ]
+                    })
+                    return cat;
+                }
+            }
             const channel = await button.guild.channels.create(name.toLowerCase(), {
                 type: 'GUILD_TEXT',
                 topic: `${user.id}-${tickets._id}`,
@@ -153,9 +172,19 @@ client.on('clickButton', async (button) => {
                 ]
             }); // Succes created the channel
             user.send(Tickets.ticketOpenToUser(channel))//Send message to the user
+            const cat = await createCat();
+            channel.setParent(cat.id);
             return channel.send(Tickets.openedTicket(message), { buttons: [TicketButtons.deleteOrder(channel)] }).then((msg) => msg.pin())//Send message to the created channel with button.
         }
 
+    }
+
+    if (id.includes("accept" && "rules")) {
+        const memberRoles = message.guild.roles.cache.find(r => r.id === config.roles.memberRules);
+        const user = message.guild.member(button.clicker.user);
+        await user.roles.add(memberRoles.id).catch(() => {
+            console.log("User trop eleve pour avoir le roles");
+        })
     }
 
 
@@ -165,6 +194,12 @@ client.on('guildMemberAdd', async member => {
     if (member.guild.id !== config.guildID) return;
     const kayroxG = client.guilds.cache.find((g) => g.id === config.guildID); //Get the guild
     const findChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.newUsersChannelName); //Check if channel exist
+    const rulesChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.rulesChannel); //Check if channel exist
+    const memberRoles = kayroxG.roles.cache.find(r => r.id === config.roles.arrived);
+    await member.roles.add(memberRoles.id).catch(() => {
+        console.log("User trop eleve pour avoir le roles");
+    })
+
     if (!findChannel) {
         const channel = await kayroxG.channels.create(config.channelName.newUsersChannelName, {
             type: 'GUILD_TEXT',
@@ -175,17 +210,14 @@ client.on('guildMemberAdd', async member => {
             }]
         }); // Succes created the channel
         // channel.setParent(config.categories.catForNewUsers);
-        channel.send(NewUsers.newUsers(member)).then((msg) => {
+        channel.send(NewUsers.newUsers(member, rulesChannel.id)).then((msg) => {
             msg.react("👋")
         })
     } else {
-        findChannel.send(NewUsers.newUsers(member)).then((msg) => {
+        findChannel.send(NewUsers.newUsers(member, rulesChannel.id)).then((msg) => {
             msg.react("👋")
         })
     }
-
-
-    // channel.send(`Welcome to the server, <@!${member.id}>!`);
 });
 
 client.on('ready', async () => {
@@ -201,20 +233,43 @@ client.on('ready', async () => {
         if (!data) client.createGuild(g);
     })
     const kayroxG = client.guilds.cache.find((g) => g.id === config.guildID); //Get the guild
-    const findChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.orderChannel); //Check if channel exist
-    if (findChannel) findChannel.delete()
-    //Categorie 💜 • Information
-    const channel = await kayroxG.channels.create(config.channelName.orderChannel, {
-        type: 'GUILD_TEXT',
-        permissionOverwrites: [{
-            id: kayroxG.id,
-            allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.ADD_REACTIONS],
-            deny: [Permissions.FLAGS.SEND_MESSAGES],
-        }]
-    }); // Succes created the channel
-    channel.setParent(config.categories.categoriesForOrder)
-    channel.send(Tickets.init()[0])//Send initial embed
-    channel.send(Tickets.init()[1], { buttons: [TicketButtons.createOrder(channel)] })//Send initial embed
+
+    async function createOrderChannel() {
+        const findChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.orderChannel); //Check if channel exist
+        if (findChannel) findChannel.delete()
+        //Categorie 💜 • Information
+        const channel = await kayroxG.channels.create(config.channelName.orderChannel, {
+            type: 'GUILD_TEXT',
+            permissionOverwrites: [{
+                id: kayroxG.id,
+                allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.ADD_REACTIONS],
+                deny: [Permissions.FLAGS.SEND_MESSAGES],
+            }]
+        }); // Succes created the channel
+        channel.setParent(config.categories.categoriesForOrder)
+        channel.send(Tickets.init()[0])//Send initial embed
+        channel.send(Tickets.init()[1], { buttons: [TicketButtons.createOrder(channel)] })//Send initial embed
+    }
+    createOrderChannel();
+
+    async function createRulesChannels() {
+        const findChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.rulesChannel); //Check if channel exist
+        if (findChannel) findChannel.delete()
+        //Categorie 💜 • Information
+        const channel = await kayroxG.channels.create(config.channelName.rulesChannel, {
+            type: 'GUILD_TEXT',
+            permissionOverwrites: [{
+                id: kayroxG.id,
+                allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.ADD_REACTIONS],
+                deny: [Permissions.FLAGS.SEND_MESSAGES],
+            }]
+        }); // Succes created the channel
+        channel.setParent(config.categories.catForRules)
+        channel.send(Misc.rules(), { buttons: [MiscButtons.acceptRules()] })
+        // channel.send(Tickets.init()[1], { buttons: [TicketButtons.createOrder(channel)] })//Send initial embed
+    }
+    createRulesChannels();
+
 
     setInterval(() => client.user.setPresence({ activity: { name: `${PREFIX}${commands[Math.floor(Math.random() * commands.length)]}`, type: 'WATCHING' }, status: 'online' }), 10000);
 

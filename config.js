@@ -4,12 +4,18 @@ module.exports = {
     categories: {
         categoriesForOrder: "954108923479195708",
         catForNewUsers: "954287275779432448",
-        // suggestCat: "954287275779432448"
+        // suggestCat: "954287275779432448",
+        catForRules: "954287275779432448",
+        ticketName: "Tickets"
     },
     channelName: {
         newUsersChannelName: "nouveau-arrivant",
         orderChannel: "🛒┇commander",
-        rulesChannel: "954106677039366234",
-        suggestChannel: "suggestion"
+        suggestChannel: "suggestion",
+        rulesChannel: "📔┇règlement"
+    },
+    roles: {
+        memberRules: "838380057167921162",
+        arrived: "949950108500369438"
     }
 }
