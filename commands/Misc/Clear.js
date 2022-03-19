@@ -7,11 +7,10 @@ module.exports.run = async (client, message, args) => {
     if (userIdAdmin.includes(message.member.id)) {
         if (!args[0] || args[0] <= 1 || args[0] > 100) {
             return message.reply("Il te faut preciser un nombre entre 2 et 100.")
-        }
-        else {
+        } else {
             return message.channel.bulkDelete(args[0]).then(() => {
                 message.reply(clearMessage(message.member, args[0])).then(msg => {
-                    msg.delete({ timeout: 5000});
+                    msg.delete({ timeout: 5000 });
                 })
             })
         }

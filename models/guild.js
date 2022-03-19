@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const guildSchema = mongoose.Schema({
-
     _id: mongoose.Schema.Types.ObjectId,
     guildID: String,
     guildName: String,
@@ -14,7 +13,6 @@ const guildSchema = mongoose.Schema({
                 ticketID: mongoose.Schema.Types.ObjectId,
                 ticketStatus: String,
                 authorId: String,
-                channelId: String,
                 openAt: String,
                 closeAt: String,
                 content: {
@@ -30,7 +28,6 @@ const guildSchema = mongoose.Schema({
             }
         ]
     }
-
 },
     {
         timestamps: true,

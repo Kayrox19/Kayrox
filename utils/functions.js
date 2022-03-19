@@ -61,11 +61,8 @@ module.exports = client => {
       const query = Guild.find({
         guildID: g.id,
       });
-  
-      // `{ _id: '5cdc267dd56b5662b7b7cc0c', age: { $gt: '50' } }`
-      // Query hasn't been executed yet, so Mongoose hasn't casted the filter.
       query.getFilter();
-  
+
       const doc = await query.exec();
       const ref = doc[0].tickets.sort((a, b) => b.openAt - a.openAt)
       return ref[0];
@@ -80,9 +77,6 @@ module.exports = client => {
       await Guild.findOne({ guildID: g.id }, async (err, docs) => {
         if (!err) {
           const theRequest = await docs.tickets.find((lead) => {
-            // console.log(data.id);
-            // console.log(lead._id);
-            // if(lead._id === data.id) return lead
             let str = lead._id.toString().split('"')
             if (str[0] === data.id) return lead
           });
@@ -108,21 +102,6 @@ module.exports = client => {
       }
     }
   }
-
-  /* client.getUser = async user => {
-     const data = await User.findOne({ userID: user.id });
-     return data ? data : undefined;
-   }; 
- 
-   client.updateUser = async (user, auth) => {
-     const filter = { userID: user.id };
-     const update = { autoPost: !auth.autoPost };
- 
-     let doc = await User.findOneAndUpdate(filter, update, {
-       new: true
-     }).then(g => console.log(`${client.timestampParser()} => Update d'un utilisateur => ${user.user.tag}`))
-   } */
-
 
   client.isEmpty = (value) => {
     return (

@@ -4,7 +4,6 @@ module.exports = {
     categories: {
         categoriesForOrder: "954108923479195708",
         catForNewUsers: "954287275779432448",
-        // suggestCat: "954287275779432448",
         catForRules: "954287275779432448",
         ticketName: "Tickets",
         archiveTickets: "954739901981655090"
