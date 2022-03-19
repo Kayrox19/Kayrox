@@ -29,7 +29,7 @@ require(`./utils/handlers/Event`)(client)
 //add Mongoose
 client.mongoose = require("./utils/mongoose");
 //Add all commands in collection
-["commands"].forEach(x => client[x] = new Collection());
+["commands", "invites"].forEach(x => client[x] = new Collection());
 
 //Load all commands
 const loadCommands = (dir = "./commands/") => {

@@ -18,6 +18,29 @@ module.exports = {
             findChannel.send(NewUsers.newUsers(member, rulesChannel.id)).then((msg) => {
                 msg.react("👋")
             })
-        }
+        };
+
+
+        // To compare, we need to load the current invite list.
+        member.guild.fetchInvites().then(async guildInvites => {
+            //Part1 get invite and inviter
+            const newInvites = guildInvites;
+            // This is the *existing* invites for the guild.
+            const oldInvites = client.invites.get(member.guild.id);
+            // Look through the invites, find the one for which the uses went up.
+            const invite = newInvites.find(i => i.uses > oldInvites.get(i.code));
+            // This is just to simplify the message being sent below (inviter doesn't have a tag property)
+            const inviter = await client.users.fetch(invite.inviter.id);
+
+            //Part2
+            const reformData = {
+                id: inviter.id,
+                invited: member.id,
+                type: "Add"
+            }
+            await client.userRef(member.guild, reformData);
+        })
+
+
     }
 }

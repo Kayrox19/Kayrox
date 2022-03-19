@@ -103,6 +103,60 @@ module.exports = client => {
     }
   }
 
+  client.userRef = async (g, data) => {
+    try {
+      await Guild.findOne({ guildID: g.id }, async (err, docs) => {
+        if (!err) {
+          const theRequest = await docs.users.find((lead) => {
+            if (lead.userId === data.id) return lead
+          });
+          if (theRequest) {
+            if (!theRequest.invited.includes(data.invited)) {
+              if (data.type === "Add") {
+                theRequest.invitedNumber++;
+                theRequest.invited.push(data.invited);
+
+                return docs.save((err) => {
+                  if (!err) return console.log(`${theRequest.userId} est passer à ${theRequest.invitedNumber} d'inviter.`);
+                  else console.log(err)
+                });
+              }
+            } else {
+              if (data.type === "Remove") {
+                theRequest.invitedNumber--;
+                for (let i = 0; i < theRequest.invited.length; i++) {
+                  if (theRequest.invited[i] === data.invited) {
+                    theRequest.invited.splice(i, 1);
+                  }
+                }
+                return docs.save((err) => {
+                  if (!err) return console.log(`${theRequest.userId} est passer à ${theRequest.invitedNumber} d'inviter.`);
+                  else console.log(err)
+                });
+              }
+            }
+          } else {
+            docs.users.push({
+              userId: data.id,
+              invitedNumber: 1,
+              invited: []
+            });
+
+            return docs.save((err) => {
+              if (!err) return console.log(`${data.id} à été correctement sauvegarder dans la BDD.`);
+              else console.log(err)
+            });
+          }
+        } else {
+          console.log(err);
+        }
+      }).clone();
+    } catch (err) {
+      if (err) console.log("une erreur est survenue");
+      return err
+    }
+  }
+
   client.isEmpty = (value) => {
     return (
       value === undefined ||

@@ -27,7 +27,18 @@ const guildSchema = mongoose.Schema({
                 }
             }
         ]
-    }
+    },
+    users: {
+        type: [
+            {
+                userId: String,
+                invitedNumber: Number,
+                affiliateCode: String,
+                wallet: Number,
+                invited: Array,
+            }
+        ]
+    },
 },
     {
         timestamps: true,

@@ -1,5 +1,5 @@
 const config = require("../../config");
-const { Permissions } = require('discord.js');
+const { Permissions, Collection } = require('discord.js');
 const Tickets = require("../../Embeds/Tickets");
 const TicketButtons = require("../../Buttons/TicketButtons");
 const PREFIX = process.env.PREFIX;
@@ -58,5 +58,11 @@ module.exports = {
         }
         createRulesChannels();
         setInterval(() => client.user.setPresence({ activity: { name: `${PREFIX}${commands[Math.floor(Math.random() * commands.length)]}`, type: 'WATCHING' }, status: 'online' }), 10000);
+
+        client.guilds.cache.forEach(g => {
+            g.fetchInvites().then(guildInvites => {
+                client.invites.set(g.id, new Collection(guildInvites.map((invite) => [invite.code, invite.uses])));
+            })
+        });
     }
 }
