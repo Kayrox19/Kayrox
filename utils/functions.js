@@ -36,7 +36,6 @@ module.exports = client => {
   }
 
   client.createTicket = async (g, data) => {
-    let data2 = []
     try {
       await Guild.findOneAndUpdate(
         { guildID: g.id },
@@ -50,17 +49,26 @@ module.exports = client => {
           },
         },
         { new: true, upsert: true, setDefaultsOnInsert: true },
-        (err, docs) => {
+        async (err, docs) => {
           if (!err) {
             console.log(`${docs._id} Commandes crée!`)
-            const ref = docs.tickets.sort((a, b) => b.openAt - a.openAt)
-            return data2.push(ref[0])
           } else {
             console.log(err);
           }
         }
       ).clone()
-      return data2[0]
+
+      const query = Guild.find({
+        guildID: g.id,
+      });
+  
+      // `{ _id: '5cdc267dd56b5662b7b7cc0c', age: { $gt: '50' } }`
+      // Query hasn't been executed yet, so Mongoose hasn't casted the filter.
+      query.getFilter();
+  
+      const doc = await query.exec();
+      const ref = doc[0].tickets.sort((a, b) => b.openAt - a.openAt)
+      return ref[0];
     } catch (err) {
       if (err) console.log("une erreur est survenue");
       return err

@@ -52,7 +52,6 @@ module.exports = {
         if (!client.isEmpty(data.embed)) {
             const embed = new MessageEmbed()
                 .setColor(14003152)
-                .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png')
                 .setAuthor(user.username, user.avatarURL())
 
             data.embed.timestamp ? embed.setTimestamp(data.embed.timestamp) : null
@@ -78,7 +77,6 @@ module.exports = {
                 return "```\n• !viewt " + e.id + " de " + e.user + "\n```"
             }).join("\n\n"))
             .setColor(14003152)
-            .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png')
 
         return embed
     },

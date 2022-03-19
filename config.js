@@ -6,7 +6,8 @@ module.exports = {
         catForNewUsers: "954287275779432448",
         // suggestCat: "954287275779432448",
         catForRules: "954287275779432448",
-        ticketName: "Tickets"
+        ticketName: "Tickets",
+        archiveTickets: "954739901981655090"
     },
     channelName: {
         newUsersChannelName: "nouveau-arrivant",

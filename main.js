@@ -96,7 +96,7 @@ client.on('clickButton', async (button) => {
     const message = button.message;
     const channel = button.channel
 
-    if (data.label === "Annuler ma commande.") {
+    if (data.label === "Annuler ma commande") {
         return channel.send(Tickets.confirmDelete(message), { buttons: [TicketButtons.confirmDeleteOrderYes(message.author.id), TicketButtons.confirmDeleteOrderNo(message.author.id)] })
     }
 
@@ -123,14 +123,37 @@ client.on('clickButton', async (button) => {
             id: channel.topic.split("-")[1]
         }
         await client.updateTicket(button.guild, data2);
+
+        const dataGuild = await client.getGuild(message.guild);
+        const ticket = await dataGuild.tickets.find((lead) => {
+            let str = lead._id.toString().split('"')
+            if (str[0] === data2.id) return lead
+        });
+        if (ticket) {
+
+            const tUser = await client.users.fetch(ticket.authorId);
+            const channelCre = await message.guild.channels.create(`archive-${channel.name}`, {
+                type: 'GUILD_TEXT',
+                parent: config.categories.archiveTickets,
+                permissionOverwrites: [{
+                    id: message.guild.id,
+                    deny: [Permissions.FLAGS.VIEW_CHANNEL],
+                }]
+            }); // Succes created the channel
+            channelCre.send(Tickets.viewTicketFirst(tUser.username, ticket.openAt))
+            ticket.content.map(async (t) => {
+                const user = await client.users.fetch(t.by);
+                channelCre.send(Tickets.viewTicket(t, client, user))
+            })
+        }
         return channel.delete();
     } else if (id.includes("close" && "confirm" && "no")) {
         return message.delete();
     }
 
     if (id.includes("open" && "order")) {
-        const user = message.guild.member(button.clicker.user);
-        let nameRef = user.user.username.split(" ")[0]
+        const user = await client.users.fetch(button.clicker.id)
+        let nameRef = user.username.split(" ")[0]
         const name = nameRef + "-commande".toLowerCase();
 
         const findChannel = button.guild.channels.cache.find(c => c.name === name.toLowerCase()); //Check if channel exist
@@ -150,17 +173,20 @@ client.on('clickButton', async (button) => {
                         type: 'category', permissionOverwrites: [
                             {
                                 id: message.guild.id,
-                                allow: ['VIEW_CHANNEL'],
+                                allow: ['VIEW_CHANNEL']
                             }
                         ]
                     })
                     return cat;
                 }
             }
-            const channel = await button.guild.channels.create(name.toLowerCase(), {
+            const cat = await createCat();
+            await button.guild.channels.create(name.toLowerCase(), {
                 type: 'GUILD_TEXT',
                 topic: `${user.id}-${tickets._id}`,
-                permissionOverwrites: [
+                parent: cat.id
+            }).then((channel) => {
+                channel.overwritePermissions([
                     {
                         id: button.guild.id,
                         deny: [Permissions.FLAGS.VIEW_CHANNEL],
@@ -169,19 +195,17 @@ client.on('clickButton', async (button) => {
                         id: user.id,
                         allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.ADD_REACTIONS]
                     }
-                ]
-            }); // Succes created the channel
-            user.send(Tickets.ticketOpenToUser(channel))//Send message to the user
-            const cat = await createCat();
-            channel.setParent(cat.id);
-            return channel.send(Tickets.openedTicket(message), { buttons: [TicketButtons.deleteOrder(channel)] }).then((msg) => msg.pin())//Send message to the created channel with button.
+                ])
+                return channel.send(Tickets.openedTicket(message), { buttons: [TicketButtons.deleteOrder(channel)] }).then((msg) => msg.pin())//Send message to the created channel with button.
+            });
+
         }
 
     }
 
     if (id.includes("accept" && "rules")) {
         const memberRoles = message.guild.roles.cache.find(r => r.id === config.roles.memberRules);
-        const user = message.guild.member(button.clicker.user);
+        const user = await client.users.fetch(button.clicker.id)
         await user.roles.add(memberRoles.id).catch(() => {
             console.log("User trop eleve pour avoir le roles");
         })

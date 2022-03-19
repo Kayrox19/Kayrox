@@ -4,7 +4,7 @@ module.exports = {
     deleteOrder: (channel) => {
         const button = new MessageButton()
             .setStyle('gray')
-            .setLabel('Annuler ma commande.')
+            .setLabel('Annuler ma commande')
             .setEmoji("🔒")
             .setID(`close-${channel.id}`)
 
@@ -31,7 +31,7 @@ module.exports = {
     createOrder: (channel) => {
         const button = new MessageButton()
             .setStyle('blurple')
-            .setLabel('Passer commande.')
+            .setLabel('Passer commande')
             .setEmoji("📩")
             .setID(`open-order-${channel.id}`)
 
