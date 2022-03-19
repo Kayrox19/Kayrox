@@ -6,13 +6,14 @@ module.exports = {
         catForNewUsers: "789492475781447691",
         // suggestCat: "954287275779432448",
         catForRules: "789492475781447691",
-        ticketName: "💜 • Catégorie Staff"
+        ticketName: "💜 • Catégorie Staff",
+        archiveTickets: "954494999368712222"
     },
     channelName: {
-        newUsersChannelName: "nouveau-arrivant",
+        newUsersChannelName: "→✔billet-entrée",
         orderChannel: "🛒┇commander",
         suggestChannel: "suggestion",
-        rulesChannel: "📔┇règlement"
+        rulesChannel: "📔┇règlement2"
     },
     roles: {
         memberRules: "789494400278593537",

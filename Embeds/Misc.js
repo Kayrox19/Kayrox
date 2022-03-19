@@ -10,11 +10,27 @@ module.exports = {
 
         return embed
     },
-    rules: (user, number) => {
+    rules1: () => {
         const embed = new MessageEmbed()
-            .setDescription("```#Règlement du serveur Discord```\n\n**n°1 •** Avoir une attitude correcte est adapté pour former une atmosphère chaleureuse autour des membres.\n**n°2 •** Ne pas spam, ni flood, ni insulter.\n**n°3 •** Les pseudos/images de profils ne doivent pas entraîne dans la haine ou même la violence.\n**n°4 •** Les caractères spéciaux, pornographiques, sexistes, homophobes… Sont interdits que ce soit à l'écrit ou bien même dans les pseudo.\n**n°5 •** La pub est interdit sauf pour le rôle de Partenariat (la pub en message privé est également interdite).\n**n°6 •** Vous devez utilisez les salons selon leurs utilités différentes.\nTout tentative d'arnaque est punissable.\n\n:warning: **Voilà, faites attention, ce règlement peut être modifié à n'importe quel moment.**\n\n:white_check_mark: Si tu souhaites avoir accès au reste du Discord je te laisse cliquer sur le bouton ci-dessous")
+            .setImage("https://cdn.discordapp.com/attachments/789511639476731944/952534595138629642/banniere_reglement.png")
+            .setColor(14665182)
+
+        return embed
+    },
+    rules2: () => {
+        const embed = new MessageEmbed()
+            .setTitle("Règlement du serveur discord")
+            .setDescription("**Règle n°1** • Avoir une attitude correcte est adaptée pour former une atmosphère chaleureuse autour des membres.\n\n**Règle n°2** • Ne pas spam, ni flood, ni insulter.\n\n**Règle n°3** • Les pseudos/images de profils ne doivent pas entraîner à la haine ou à la violence.\n\n**Règle n°4** • Les caractères spéciaux, pornographiques, sexistes, homophobes… Sont interdits que ce soit à l'écrit ou bien dans les pseudos.\n\n**Règle n°5** • La pub est interdite sauf pour le rôle <@&952530060152295424> *(la pub en message privé est également interdite).*\n\n**Règle n°6** • Vous devez utilisez les salons selon leurs différentes utilités. Tout tentative d'arnaque est punissable.")
             .setColor(14003152)
-            .setImage("https://i.imgur.com/RGu4Kzw.png")
+            .setTimestamp()
+
+        return embed
+    },
+    rules3: () => {
+        const embed = new MessageEmbed()
+            .setTitle("Règlement des commandes")
+            .setDescription("**Règle n°1** • Toute pub mensongère envers le discord et punissable.\n\n**Règle n°2** • La publication d'avis sur un service n'étant pas constructifs ou visant à nuire au bien être du discord est interdite.\n\n**Règle n°3** • Toute tentative de vol ou d'arnaque lors d'une commande est strictement interdit par ce présent règlement.")
+            .setColor(14003152)
             .setTimestamp()
             .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
 

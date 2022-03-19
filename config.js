@@ -10,13 +10,18 @@ module.exports = {
         archiveTickets: "954739901981655090"
     },
     channelName: {
-        newUsersChannelName: "nouveau-arrivant",
+        newUsersChannelName: "954289524295499798",
         orderChannel: "🛒┇commander",
-        suggestChannel: "suggestion",
+        suggestChannel: "954312868856229888",
         rulesChannel: "📔┇règlement"
     },
     roles: {
         memberRules: "838380057167921162",
         arrived: "949950108500369438"
+    },
+    emoji: {
+        cheked: "lepen",
+        cross: "marinelepen",
+        neutral: "AHafaitplaisirsa"
     }
 }

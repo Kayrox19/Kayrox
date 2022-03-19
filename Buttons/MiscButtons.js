@@ -5,7 +5,6 @@ module.exports = {
         const button = new MessageButton()
             .setStyle('green')
             .setLabel('Accepter le règlement')
-            .setEmoji("✔️")
             .setID(`accept-rules`)
 
         return button
