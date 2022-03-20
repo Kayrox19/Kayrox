@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args) => {
             message.reply(`\n`)
             return message.reply(Invites.showInvites(userInviter, await client.calculatePercentForCode(userInviter.invitedNumber)));
         } else {
-            return message.reply(Invites.showInvites(mention))
+            return message.reply(Invites.showInvitesForNoUser(message.member))
         }
     } else {
         const userInviter = await getUser(mention.id);
@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args) => {
             message.reply(`\n`)
             return message.reply(Invites.showInvites(userInviter, await client.calculatePercentForCode(userInviter.invitedNumber)));
         } else {
-            message.reply(`L'utilisateur <@${mention.id}> n'a aucune invitation.`)
+           return message.reply(Invites.showInvitesForNoUser(mention))
         }
     }
 

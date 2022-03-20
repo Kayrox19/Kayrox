@@ -32,7 +32,7 @@ module.exports = {
 
         return embed
     },
-    showInvitesForNoUser: (user, number) => {
+    showInvitesForNoUser: (user) => {
         const embed = new MessageEmbed()
             .setTitle("> ✉️ Invitation")
             .setDescription(`> De <@${user.id}>`)

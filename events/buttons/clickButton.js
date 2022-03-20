@@ -11,7 +11,7 @@ module.exports = {
         const message = button.message;
         const channel = button.channel
 
-        if (data.label === "Annuler ma commande") {
+        if (data.label === "Fermer ma commande") {
             return channel.send(Tickets.confirmDelete(message), { buttons: [TicketButtons.confirmDeleteOrderYes(message.author.id), TicketButtons.confirmDeleteOrderNo(message.author.id)] })
         }
 
