@@ -13,10 +13,11 @@ module.exports = {
         archiveTickets: "954494999368712222"//Id categories archive
     },
     channelName: {
-        newUsersChannelName: "789481797892702259",//Id channel nouveau arrivant
-        orderChannel: "🛒┇commander",//Nom du channel commander
-        suggestChannel: "789481484380930049",//id channel sugestion
-        rulesChannel: "📔┇règlement"//Nom du channel reglement
+        newUsersChannelName: "789481797892702259",//Id channel nouveau arrivant.
+        orderChannel: "🛒┇commander",//Nom du channel commander.
+        suggestChannel: "789481484380930049",//id channel sugestion.
+        rulesChannel: "📔┇règlement",//Nom du channel reglement.
+        affiliateChannel: "955062213410975765"//id du sallon parainage.
     },
     roles: {
         memberRules: "789494400278593537",//Id roles clique sur reglement

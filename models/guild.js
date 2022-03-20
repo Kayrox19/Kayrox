@@ -32,9 +32,15 @@ const guildSchema = mongoose.Schema({
         type: [
             {
                 userId: String,
-                invitedNumber: Number,
+                invitedNumber: {
+                    type: Number,
+                    default: 0,
+                },
                 affiliateCode: String,
-                wallet: Number,
+                wallet: {
+                    type: Number,
+                    default: 0,
+                },
                 invited: Array,
             }
         ]

@@ -38,9 +38,37 @@ module.exports = {
                 invited: member.id,
                 type: "Add"
             }
-            await client.userRef(member.guild, reformData);
+            await client.userRef(member.guild, reformData).then(async () => {
+                //PART 3
+                const dataGuild = await client.getGuild(member.guild);
+                const userInviter = await dataGuild.users.find((lead) => {
+                    if (lead.userId === inviter.id) return lead
+                })
+                if (!userInviter.affiliateCode) {
+                    if (userInviter.invitedNumber >= 5) {
+                        const generateRandomString = (myLength) => {
+                            const chars =
+                                "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
+                            const randomArray = Array.from(
+                                { length: myLength },
+                                (v, k) => chars[Math.floor(Math.random() * chars.length)]
+                            );
+
+                            const randomString = randomArray.join("");
+                            return randomString;
+                        };
+
+                        const code = generateRandomString(8);
+                        const Data = {
+                            id: inviter.id,
+                            code: code
+                        }
+                        await client.setCodeForUser(member.guild, Data);
+                    }
+                }
+            })
+
+
         })
-
-
     }
 }

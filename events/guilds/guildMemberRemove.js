@@ -14,8 +14,5 @@ module.exports = {
             }
             await client.userRef(member.guild, reformData);
         }
-
-
-
     }
 }

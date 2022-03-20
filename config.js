@@ -12,7 +12,8 @@ module.exports = {
         newUsersChannelName: "954289524295499798",
         orderChannel: "🛒┇commander",
         suggestChannel: "954312868856229888",
-        rulesChannel: "📔┇règlement"
+        rulesChannel: "📔┇règlement", 
+        affiliateChannel: "955062213410975765"
     },
     roles: {
         memberRules: "838380057167921162",

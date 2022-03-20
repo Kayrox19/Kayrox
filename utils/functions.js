@@ -4,6 +4,7 @@ require("dotenv").config();
 
 module.exports = client => {
 
+  //Guild
   client.getGuild = async guild => {
     const data = await Guild.findOne({ guildID: guild.id }).catch((e) => {
       console.warn("Imoposisble de get l'id")
@@ -11,7 +12,7 @@ module.exports = client => {
     return data ? data : undefined;
   };
 
-  client.updateGuild = async (g) => {
+  client.updateGuild = async g => {
     const filter = { guildID: g.id };
     const update = {
       guildName: g.name,
@@ -35,6 +36,7 @@ module.exports = client => {
     createGuild.save().then(g => console.log(`${client.timestampParser()} => Nouveau serveur => ${g.guildName}`));
   }
 
+  //Tickets
   client.createTicket = async (g, data) => {
     try {
       await Guild.findOneAndUpdate(
@@ -103,6 +105,7 @@ module.exports = client => {
     }
   }
 
+  //InvitesManager
   client.userRef = async (g, data) => {
     try {
       await Guild.findOne({ guildID: g.id }, async (err, docs) => {
@@ -136,14 +139,56 @@ module.exports = client => {
               }
             }
           } else {
-            docs.users.push({
-              userId: data.id,
-              invitedNumber: 1,
-              invited: []
-            });
+            if (data.type === "Add") {
+              docs.users.push({
+                userId: data.id,
+                invitedNumber: 1,
+                invited: [data.invited]
+              });
+
+              return docs.save((err) => {
+                if (!err) return console.log(`${data.id} à été correctement sauvegarder dans la BDD.`);
+                else console.log(err)
+              });
+            } else if (data.type === "Remove") {
+              docs.users.push({
+                userId: data.id,
+                invitedNumber: 0,
+                invited: []
+              });
+
+              return docs.save((err) => {
+                if (!err) return console.log(`${data.id} à été correctement sauvegarder dans la BDD.`);
+                else console.log(err)
+              });
+            }
+
+
+
+          }
+        } else {
+          console.log(err);
+        }
+      }).clone();
+    } catch (err) {
+      if (err) console.log("une erreur est survenue");
+      return err
+    }
+  }
+
+  client.setCodeForUser = async (g, data) => {
+    try {
+      await Guild.findOne({ guildID: g.id }, async (err, docs) => {
+        if (!err) {
+          const theRequest = await docs.users.find((lead) => {
+            if (lead.userId === data.id) return lead
+          });
+
+          if (theRequest) {
+            theRequest.affiliateCode = data.code;
 
             return docs.save((err) => {
-              if (!err) return console.log(`${data.id} à été correctement sauvegarder dans la BDD.`);
+              if (!err) return console.log(`${theRequest.userId} à recus son code ${theRequest.affiliateCode}.`);
               else console.log(err)
             });
           }
@@ -157,7 +202,15 @@ module.exports = client => {
     }
   }
 
-  client.isEmpty = (value) => {
+  client.calculatePercentForCode = async number => {
+    if (number < 5) return 0;
+    else if (number >= 20) return 20;
+    else if (number >= 10) return 15;
+    else if (number >= 5) return 10;
+  }
+
+  //Misc
+  client.isEmpty = value => {
     return (
       value === undefined ||
       value === null ||

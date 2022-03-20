@@ -119,10 +119,13 @@ module.exports = {
 
         if (id.includes("accept" && "rules")) {
             const memberRoles = message.guild.roles.cache.find(r => r.id === config.roles.memberRules);
-            const user = await client.users.fetch(button.clicker.id)
+            // const user = await client.users.fetch(button.clicker.id)
+            const user = message.guild.member(button.clicker.user);
             await user.roles.add(memberRoles.id).catch(() => {
                 console.log("User trop eleve pour avoir le roles");
             })
         }
+        button.reply.defer();
+
     }
 }
