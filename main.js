@@ -18,6 +18,9 @@ require('dotenv').config();
 const { readdirSync } = require("fs");
 const TOKEN = process.env.TOKEN;
 
+const app = express();
+const port = process.env.PORT;
+
 //Create client
 const client = new Client();
 //Add discord buttons
@@ -57,3 +60,7 @@ process.on("warning", (...args) => { console.log(...args); });
 
 //Login
 client.login(TOKEN);
+
+app.listen(port, () => {
+    console.log(`${client.timestampParser()} => Express server is connected on port: ${port}`)
+});
