@@ -45,7 +45,7 @@ module.exports = {
                     if (lead.userId === inviter.id) return lead
                 })
                 if (!userInviter.affiliateCode) {
-                    if (userInviter.invitedNumber >= 5) {
+                    if (userInviter.invitedNumber >= 4) {
                         const generateRandomString = (myLength) => {
                             const chars =
                                 "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
@@ -64,6 +64,8 @@ module.exports = {
                             code: code
                         }
                         await client.setCodeForUser(member.guild, Data);
+
+                        return inviter.send("Bravo, vous avez atteint les 5 invitations\nVoici votre code:```> " + Data.code + " ```");
                     }
                 }
             })

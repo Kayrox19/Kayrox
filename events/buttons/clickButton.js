@@ -38,29 +38,8 @@ module.exports = {
                 id: channel.topic.split("-")[1]
             }
             await client.updateTicket(button.guild, data2);
-
-            const dataGuild = await client.getGuild(message.guild);
-            const ticket = await dataGuild.tickets.find((lead) => {
-                let str = lead._id.toString().split('"')
-                if (str[0] === data2.id) return lead
-            });
-            if (ticket) {
-                const tUser = await client.users.fetch(ticket.authorId);
-                const channelCre = await message.guild.channels.create(`archive-${channel.name}`, {
-                    type: 'GUILD_TEXT',
-                    parent: config.categories.archiveTickets,
-                    permissionOverwrites: [{
-                        id: message.guild.id,
-                        deny: [Permissions.FLAGS.VIEW_CHANNEL],
-                    }]
-                }); // Succes created the channel
-                channelCre.send(Tickets.viewTicketFirst(tUser.username, ticket.openAt))
-                ticket.content.map(async (t) => {
-                    const user = await client.users.fetch(t.by);
-                    channelCre.send(Tickets.viewTicket(t, client, user))
-                })
-            }
-            return channel.delete();
+            channel.setParent(config.categories.archiveTickets);
+            channel.setName(`archive-${channel.name}`)
         } else if (id.includes("close" && "confirm" && "no")) {
             return message.delete();
         }

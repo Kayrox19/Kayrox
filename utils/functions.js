@@ -202,6 +202,44 @@ module.exports = client => {
     }
   }
 
+  client.payUser = async (g, data) => {
+    try {
+      const up = await Guild.findOne({ guildID: g.id }, async (err, docs) => {
+        if (!err) {
+          const theRequest = await docs.users.find((lead) => {
+            if (lead.userId === data.id) return lead
+          });
+
+          if (theRequest) {
+            if(data.type === "pay") {
+              const percent = await client.calculatePercentForCode(theRequest.invitedNumber);
+              theRequest.wallet = theRequest.wallet + (data.price * (percent / 100));
+  
+              return docs.save((err) => {
+                if (!err) return console.log(`${theRequest.userId} à recus argent ${theRequest.wallet}€.`);
+                else console.log(err)
+              });
+            } else if(data.type === "reset") {
+              theRequest.wallet = 0;
+  
+              return docs.save((err) => {
+                if (!err) return console.log(`${theRequest.userId} à bien été reset ${theRequest.wallet}€.`);
+                else console.log(err)
+              });
+            }
+            
+          }
+        } else {
+          console.log(err);
+        }
+      }).clone();
+      return up;
+    } catch (err) {
+      if (err) console.log("une erreur est survenue");
+      return err
+    }
+  }
+
   client.calculatePercentForCode = async number => {
     if (number < 5) return 0;
     else if (number >= 20) return 20;
