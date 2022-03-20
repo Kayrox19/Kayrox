@@ -17,9 +17,13 @@ require('discord-reply');
 require('dotenv').config();
 const { readdirSync } = require("fs");
 const TOKEN = process.env.TOKEN;
+const express = require("express");
 
 const app = express();
 const port = process.env.PORT;
+app.get('/', (req, res) => {
+  res.send("Welcome to Kayrox' Bot")
+});
 
 //Create client
 const client = new Client();
