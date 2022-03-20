@@ -1,5 +1,7 @@
 const config = require("../../config");
 const { Permissions, Collection } = require('discord.js');
+const Misc = require("../../Embeds/Misc");
+const MiscButtons = require("../../Buttons/MiscButtons");
 const Tickets = require("../../Embeds/Tickets");
 const TicketButtons = require("../../Buttons/TicketButtons");
 const PREFIX = process.env.PREFIX;

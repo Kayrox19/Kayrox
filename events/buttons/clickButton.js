@@ -38,6 +38,7 @@ module.exports = {
                 id: channel.topic.split("-")[1]
             }
             await client.updateTicket(button.guild, data2);
+            message.delete()
             channel.setParent(config.categories.archiveTickets);
             channel.setName(`archive-${channel.name}`)
         } else if (id.includes("close" && "confirm" && "no")) {
