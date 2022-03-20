@@ -18,7 +18,7 @@ module.exports = {
         const embed = new MessageEmbed()
             .setAuthor(`👋 - Bienvenue sur votre espace ticket !`)
             .setColor(14003152)
-            .setDescription("Afin de gagner en efficacité, merci de remplir les informations demandées dans ce formulaire :\n```\n• Description de votre commande :\n• Type de votre commande (logo, bannière...) :\n• Votre budget :\n• Informations suplémentaires :\n```\n→ Merci de patienter jusqu'à la prise en charge de votre commande.")
+            .setDescription("Afin de gagner en efficacité, merci de remplir les informations demandées dans ce formulaire :\n```\n• Description de votre commande :\n• Type de votre commande (logo, bannière...) :\n• Dimensions (en pixels) :\n• Votre budget :\n• Informations suplémentaires :\n```\n→ Merci de patienter jusqu'à la prise en charge de votre commande.")
             .setTimestamp()
             .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
         return embed

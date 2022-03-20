@@ -29,7 +29,7 @@ module.exports = {
     rules3: () => {
         const embed = new MessageEmbed()
             .setTitle("Règlement des commandes")
-            .setDescription("**Règle n°1** • Toute pub mensongère envers le discord et punissable.\n\n**Règle n°2** • La publication d'avis sur un service n'étant pas constructifs ou visant à nuire au bien être du discord est interdite.\n\n**Règle n°3** • Toute tentative de vol ou d'arnaque lors d'une commande est strictement interdit par ce présent règlement.")
+            .setDescription("**Règle n°1** • Toute pub mensongère envers le discord est punissable.\n\n**Règle n°2** • La publication d'avis sur un service n'étant pas constructive ou visant à nuire au bien être du discord est interdite.\n\n**Règle n°3** • Toute tentative de vol ou d'arnaque lors d'une commande est strictement interdite par ce présent règlement.")
             .setColor(14003152)
             .setTimestamp()
             .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
