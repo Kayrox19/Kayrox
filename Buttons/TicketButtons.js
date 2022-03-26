@@ -4,7 +4,7 @@ module.exports = {
     deleteOrder: (channel) => {
         const button = new MessageButton()
             .setStyle('gray')
-            .setLabel('Annuler ma commande')
+            .setLabel('Fermer ma commande')
             .setEmoji("🔒")
             .setID(`close-${channel.id}`)
 

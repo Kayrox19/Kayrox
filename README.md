@@ -1,6 +1,7 @@
 # Kayrox' Bot
 
 ## Config.js
+
 ```js
 module.exports = {
     guildID: "788878663042334721",//Id du serveur
@@ -17,7 +18,8 @@ module.exports = {
         orderChannel: "🛒┇commander",//Nom du channel commander.
         suggestChannel: "789481484380930049",//id channel sugestion.
         rulesChannel: "📔┇règlement",//Nom du channel reglement.
-        affiliateChannel: "955062213410975765"//id du sallon parainage.
+        affiliateChannel: "955062213410975765",//id du sallon parainage.
+        giveAwayChannel: ""//id du channel de give away
     },
     roles: {
         memberRules: "789494400278593537",//Id roles clique sur reglement
