@@ -30,8 +30,7 @@ module.exports = {
             // Look through the invites, find the one for which the uses went up.
             const invite = newInvites.find(i => i.uses > oldInvites.get(i.code));
             // This is just to simplify the message being sent below (inviter doesn't have a tag property)
-            const inviter = await client.users.fetch(invite.inviter.id);
-
+            const inviter = await client.users.fetch(await invite.inviter.id);
             //Part2
             const reformData = {
                 id: inviter.id,
