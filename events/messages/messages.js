@@ -9,7 +9,7 @@ module.exports = {
         if (message.guild) {
             if (message.channel.id === config.channelName.suggestChannel && !message.author.bot) {
                 message.delete()
-                return message.channel.send(Suggest.addSuggest(message.content)).then((msg) => {
+                return message.channel.send(Suggest.addSuggest(message.content, message.author)).then((msg) => {
                     const cheked = client.emojis.cache.find(emoji => emoji.name === config.emoji.cheked);
                     const cross = client.emojis.cache.find(emoji => emoji.name === config.emoji.cross);
                     const neutral = client.emojis.cache.find(emoji => emoji.name === config.emoji.neutral);

@@ -1,10 +1,10 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-    addSuggest: ( sug) => {
+    addSuggest: (sug, user) => {
         const embed = new MessageEmbed()
             .setTitle("Nouvelle suggestion !")
-            .setDescription(`> ${sug}`)
+            .setDescription(`> De <@${user.id}>\n\n> ${sug}`)
             .setColor(14003152)
             .setTimestamp()
             .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');

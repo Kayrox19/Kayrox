@@ -39,12 +39,12 @@ module.exports = {
             .setColor(14003152)
             .setTimestamp()
             .addFields(
-                { name: "Invitation(s):", value: 0, inline: true },
+                { name: "Invitation(s):", value: "```0```", inline: true },
                 { name: "\u200B", value: "\u200B", inline: true },
-                { name: "Pourcentage:", value: "0%", inline: true },
+                { name: "Pourcentage:", value: "```0%```", inline: true },
                 { name: "Code:", value: "> ```Non défini```", inline: true },
                 { name: "\u200B", value: "\u200B", inline: true },
-                { name: "Wallet:", value: "0€", inline: true },
+                { name: "Wallet:", value: "```0€```", inline: true },
                 { name: "Pour recevoir votre argent:", value: `Renseignez vous sur ce channel --> <#${config.channelName.affiliateChannel}>`, inline: true }
             )
             .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
