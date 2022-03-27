@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
 
         const findChannel = await message.guild.channels.cache.find(c => c.id === config.channelName.giveAwayChannel);
         if (findChannel) {
-            const time2 = Date.parse(time) / 1000;
+            const time2 = Date.parse(time)
             const message2 = await findChannel.send(Giveaway.giveaway({ prize: prize, numberWinners: numberOfwinner, time: parseInt(time2), numbers: 0 }), { buttons: [MiscButtons.giveButton()] })
             return await client.createGiveaway(numberOfwinner, prize, time2, message2.id)
         }
