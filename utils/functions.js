@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Guild } = require("../models/index");
+const { Guild, Giveaway } = require("../models/index");
 require("dotenv").config();
 
 module.exports = client => {
@@ -211,23 +211,23 @@ module.exports = client => {
           });
 
           if (theRequest) {
-            if(data.type === "pay") {
+            if (data.type === "pay") {
               const percent = await client.calculatePercentForCode(theRequest.invitedNumber);
               theRequest.wallet = theRequest.wallet + (data.price * (percent / 100));
-  
+
               return docs.save((err) => {
                 if (!err) return console.log(`${theRequest.userId} à recus argent ${theRequest.wallet}€.`);
                 else console.log(err)
               });
-            } else if(data.type === "reset") {
+            } else if (data.type === "reset") {
               theRequest.wallet = 0;
-  
+
               return docs.save((err) => {
                 if (!err) return console.log(`${theRequest.userId} à bien été reset ${theRequest.wallet}€.`);
                 else console.log(err)
               });
             }
-            
+
           }
         } else {
           console.log(err);
@@ -245,6 +245,62 @@ module.exports = client => {
     else if (number >= 20) return 20;
     else if (number >= 10) return 15;
     else if (number >= 5) return 10;
+  }
+
+  //Giveaway
+  client.createGiveaway = async (winners, prize, time, messageId) => {
+    const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, {
+      messageId: messageId,
+      prize: prize,
+      numberOfWinner: winners,
+      time: time
+    })
+    const createGive = await new Giveaway(merged);
+    createGive.save().then(g => console.log(`${client.timestampParser()} => Nouveau giveaway => ${g._id}`));
+  }
+
+  client.findGiveAway = async messageId => {
+    const data = await Giveaway.findOne({ messageId: messageId }).catch((e) => {
+      console.warn("Imoposisble de get l'id")
+    });
+    return data ? data : undefined;
+  };
+
+  client.addUserToGiveAway = async (messageId, user) => {
+    try {
+      await Giveaway.findOneAndUpdate(
+        { messageId: messageId },
+        {
+          $push: {
+            users: user
+          },
+        },
+        { new: true, upsert: true, setDefaultsOnInsert: true },
+        async (err, docs) => {
+          if (!err) {
+            console.log(`${user} user ajouter`)
+          } else {
+            console.log(err);
+          }
+        }
+      )
+    } catch (err) {
+      if (err) console.log("une erreur est survenue");
+      return err
+    }
+  }
+
+  client.getAllGive = async () => {
+    const data = await Giveaway.find().catch((e) => {
+      console.warn("Imoposisble de get l'id")
+    });
+    return data ? data : undefined;
+  };
+
+  client.deleteGive = async id => {
+    await Giveaway.deleteOne({ _id: id }).exec().then(() => {
+      console.log(`${client.timestampParser()} giveaway --> ${id} vient d'etres suprimer`);
+    })
   }
 
   //Misc

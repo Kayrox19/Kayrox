@@ -22,5 +22,6 @@ module.exports.help = {
     name: "clear",
     category: "misc",
     description: "",
-    usage: ""
+    usage: "",
+    admin: true
 };

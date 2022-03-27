@@ -35,5 +35,6 @@ module.exports.help = {
     name: "pay",
     category: "invites",
     description: "",
-    usage: ""
+    usage: "",
+    admin: true
 };

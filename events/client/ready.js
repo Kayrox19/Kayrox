@@ -4,6 +4,7 @@ const Misc = require("../../Embeds/Misc");
 const MiscButtons = require("../../Buttons/MiscButtons");
 const Tickets = require("../../Embeds/Tickets");
 const TicketButtons = require("../../Buttons/TicketButtons");
+const checkGiveaway = require("../../utils/checkGiveaway");
 const PREFIX = process.env.PREFIX;
 
 module.exports = {
@@ -11,7 +12,11 @@ module.exports = {
     once: true,
     async execute(client) {
         const commands = [];
-        client.commands.forEach((c) => commands.push(c.help.name))
+        client.commands.forEach((c) => {
+            if (!c.help.admin) {
+                commands.push(c.help.name)
+            }
+        })
         console.log(`${client.timestampParser()} => ${client.user.tag} with ${client.guilds.cache.map(g => g.
             memberCount).reduce((a, b) => a + b)} users!`)
 
@@ -25,8 +30,8 @@ module.exports = {
 
         async function createOrderChannel() {
             const findChannel = kayroxG.channels.cache.find(c => c.name === config.channelName.orderChannel); //Check if channel exist
-            if (findChannel) findChannel.delete()
-            //Categorie 💜 • Information
+            if (findChannel) return;
+
             const channel = await kayroxG.channels.create(config.channelName.orderChannel, {
                 type: 'GUILD_TEXT',
                 permissionOverwrites: [{
@@ -60,6 +65,11 @@ module.exports = {
         }
         createRulesChannels();
         setInterval(() => client.user.setPresence({ activity: { name: `${PREFIX}${commands[Math.floor(Math.random() * commands.length)]}`, type: 'WATCHING' }, status: 'online' }), 10000);
+
+
+        setInterval(() => {
+            checkGiveaway.check(client)
+        }, 10000)
 
         client.guilds.cache.forEach(g => {
             g.fetchInvites().then(guildInvites => {

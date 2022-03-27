@@ -33,5 +33,6 @@ module.exports.help = {
     name: "reset",
     category: "invites",
     description: "",
-    usage: ""
+    usage: "",
+    admin: true
 };

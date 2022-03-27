@@ -2,6 +2,7 @@ const config = require("../../config");
 const { Permissions } = require("discord.js");
 const Tickets = require("../../Embeds/Tickets");
 const TicketButtons = require("../../Buttons/TicketButtons");
+const Giveaway = require("../../Embeds/Giveaway");
 
 module.exports = {
     name: "clickButton",
@@ -12,7 +13,9 @@ module.exports = {
         const channel = button.channel
 
         if (data.label === "Fermer ma commande") {
+            button.reply.defer();
             return channel.send(Tickets.confirmDelete(message), { buttons: [TicketButtons.confirmDeleteOrderYes(message.author.id), TicketButtons.confirmDeleteOrderNo(message.author.id)] })
+
         }
 
         const id = button.id.split("-");
@@ -41,7 +44,9 @@ module.exports = {
             message.delete()
             channel.setParent(config.categories.archiveTickets);
             channel.setName(`archive-${channel.name}`)
+            button.reply.defer();
         } else if (id.includes("close" && "confirm" && "no")) {
+            button.reply.defer();
             return message.delete();
         }
 
@@ -94,6 +99,7 @@ module.exports = {
                 });
 
             }
+            button.reply.defer();
 
         }
 
@@ -104,8 +110,26 @@ module.exports = {
             await user.roles.add(memberRoles.id).catch(() => {
                 console.log("User trop eleve pour avoir le roles");
             })
+            button.reply.defer();
         }
-        button.reply.defer();
+
+        if (button.id === "join-giveaway") {
+            const user = await message.guild.member(button.clicker.user);
+            const giveaway = await client.findGiveAway(message.id);
+            if (giveaway) {
+                if (giveaway.users.includes(user.id)) {
+                    return await button.reply.send("Vous participez déjà à ce giveaway!", { ephemeral: true });
+                } else {
+                    await client.addUserToGiveAway(message.id, user.id);
+                    const gI = await client.findGiveAway(message.id);
+                    message.edit(Giveaway.giveaway({ prize: gI.prize, numberWinners: gI.numberOfWinner, time: gI.time, numbers: gI.users.length }));
+                    return await button.reply.send("Vous avez rejoint ce giveaway!", { ephemeral: true });
+                }
+            } else {
+                return await button.reply.send("Ce giveaway n'est plus disponible!", { ephemeral: true });
+            }
+
+        }
 
     }
 }

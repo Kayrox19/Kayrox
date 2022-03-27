@@ -4,8 +4,8 @@
 
 ```js
 module.exports = {
-    guildID: "788878663042334721",//Id du serveur
-    adminRoleId: "789493366827515936",//Id roles admin
+    guildID: "588359330701639716",//Id du serveur
+    adminRoleId: "949950203773984778",//Id roles admin
     categories: {
         categoriesForOrder: "788878663042334722",//Id categories commande
         catForNewUsers: "789481293619789844",//Id categories nouveau arrivant
@@ -18,8 +18,8 @@ module.exports = {
         orderChannel: "🛒┇commander",//Nom du channel commander.
         suggestChannel: "789481484380930049",//id channel sugestion.
         rulesChannel: "📔┇règlement",//Nom du channel reglement.
-        affiliateChannel: "955062213410975765",//id du sallon parainage.
-        giveAwayChannel: ""//id du channel de give away
+        affiliateChannel: "951871236483452948",//id du sallon parainage.
+        giveAwayChannel: "955506287490248784"//id du channel de give away
     },
     roles: {
         memberRules: "789494400278593537",//Id roles clique sur reglement
@@ -30,4 +30,5 @@ module.exports = {
         cross: "croix",//Id emoji Non
         neutral: "neutre"//Id emoji neutre
     }
+}
 ```

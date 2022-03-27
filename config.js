@@ -1,28 +1,28 @@
 module.exports = {
-    guildID: "588359330701639716",//Id du serveur
-    adminRoleId: "949950203773984778",//Id roles admin
+    guildID: "588359330701639716",
+    adminRoleId: "949950203773984778",
     categories: {
-        categoriesForOrder: "788878663042334722",//Id categories commande
-        catForNewUsers: "789481293619789844",//Id categories nouveau arrivant
-        catForRules: "788878663042334722",//Id categories reglement
-        ticketName: "💜 • Commande",//Nom categories ticket
-        archiveTickets: "954494999368712222"//Id categories archive
+        categoriesForOrder: "954108923479195708",
+        catForNewUsers: "954287275779432448",
+        catForRules: "954287275779432448",
+        ticketName: "Tickets",
+        archiveTickets: "954739901981655090"
     },
     channelName: {
-        newUsersChannelName: "789481338587185183",//Id channel nouveau arrivant.
-        orderChannel: "🛒┇commander",//Nom du channel commander.
-        suggestChannel: "789481484380930049",//id channel sugestion.
-        rulesChannel: "📔┇règlement",//Nom du channel reglement.
-        affiliateChannel: "951871236483452948",//id du sallon parainage.
-        giveAwayChannel: "955506287490248784"//id du channel de give away
+        newUsersChannelName: "954289524295499798",
+        orderChannel: "🛒┇commander",
+        suggestChannel: "954312868856229888",
+        rulesChannel: "📔┇règlement", 
+        affiliateChannel: "955062213410975765",
+        giveAwayChannel: "955506287490248784"
     },
     roles: {
-        memberRules: "789494400278593537",//Id roles clique sur reglement
-        arrived: "789503276235096104"//Id roles quand il join
+        memberRules: "838380057167921162",
+        arrived: "949950108500369438"
     },
     emoji: {
-        cheked: "coche",//Id emoji Oui
-        cross: "croix",//Id emoji Non
-        neutral: "neutre"//Id emoji neutre
+        cheked: "lepen",
+        cross: "marinelepen",
+        neutral: "AHafaitplaisirsa"
     }
 }
