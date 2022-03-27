@@ -16,7 +16,7 @@ module.exports = {
 
         if (findChannel) {
             findChannel.send(NewUsers.newUsers(member, rulesChannel.id)).then((msg) => {
-                msg.react("👋")
+                msg.react("<:main:951952618790482001>")
             })
         };
 
