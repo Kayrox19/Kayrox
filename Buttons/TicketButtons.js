@@ -28,13 +28,13 @@ module.exports = {
 
         return button
     },
-    // createOrder: (channel) => {
-    //     const button = new MessageButton()
-    //         .setStyle('blurple')
-    //         .setLabel('Passer commande')
-    //         .setEmoji("📩")
-    //         .setID(`open-order-${channel.id}`)
+     createOrder: (channel) => {
+         const button = new MessageButton()
+             .setStyle('blurple')
+             .setLabel('Passer commande')
+             .setEmoji("📩")
+             .setID(`open-order-${channel.id}`)
 
-    //     return button
-    // },
+         return button
+     },
 }

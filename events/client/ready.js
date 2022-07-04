@@ -42,8 +42,8 @@ module.exports = {
             }); // Succes created the channel
             channel.setParent(config.categories.categoriesForOrder)
             channel.send(Tickets.init()[0])//Send initial embed
-            channel.send(Tickets.init()[1])//Send initial embed
-          //, { buttons: [TicketButtons.createOrder(channel)] }
+            channel.send(Tickets.init()[1]), { buttons: [TicketButtons.createOrder(channel)] }//Send initial embed
+          //
         }
         createOrderChannel();
 
