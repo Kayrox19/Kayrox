@@ -28,7 +28,7 @@ module.exports = {
                 { name: "Wallet:", value: user.wallet ? "> ```" + user.wallet + "€```" : "> ```0€```", inline: true },
                 { name: "Pour recevoir votre argent:", value: `Renseignez vous sur ce channel --> <#${config.channelName.affiliateChannel}>`, inline: true }
             )
-            .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
+            .setFooter("Kayrox' Bot", 'https://zupimages.net/up/22/34/ob9s.png');
 
         return embed
     },
@@ -47,7 +47,7 @@ module.exports = {
                 { name: "Wallet:", value: "```0€```", inline: true },
                 { name: "Pour recevoir votre argent:", value: `Renseignez vous sur ce channel --> <#${config.channelName.affiliateChannel}>`, inline: true }
             )
-            .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
+            .setFooter("Kayrox' Bot", 'https://zupimages.net/up/22/34/ob9s.png');
 
         return embed
     }

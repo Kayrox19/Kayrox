@@ -6,7 +6,7 @@ module.exports = {
             .setDescription(`***<@${user.id}>, ${number} messages ont bien été supprimés.***`)
             .setColor(14003152)
             .setTimestamp()
-            .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
+            .setFooter("Kayrox' Bot", 'https://zupimages.net/up/22/34/ob9s.png');
 
         return embed
     },
@@ -32,7 +32,7 @@ module.exports = {
             .setDescription("**Règle n°1** • Toute pub mensongère envers le discord est punissable.\n\n**Règle n°2** • La publication d'avis sur un service n'étant pas constructifs ou visant à nuire au bien être de Kayrox - Art est interdite.\n\n**Règle n°3** • Toute tentative de vol ou d'arnaque lors d'une commande est strictement interdite par ce présent règlement.")
             .setColor(14003152)
             .setTimestamp()
-            .setFooter("Kayrox' Bot", 'https://www.zupimages.net/up/22/11/un0j.png');
+            .setFooter("Kayrox' Bot", 'https://zupimages.net/up/22/34/ob9s.png');
 
         return embed
     }
